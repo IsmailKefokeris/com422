@@ -1,6 +1,9 @@
 class Car:
 
     def __init__(self, model, colour, currentSpeed, maxSpeed, fuelLevel):
+
+        if fuelLevel < 0 or fuelLevel > 100:
+            raise Exception("Fuel Level Can only be out of 100% (from 0 to 100)")
         self.model = model
         self.colour = colour
         self.currentSpeed = currentSpeed
@@ -16,9 +19,11 @@ class Car:
         elif self.currentSpeed + accel <= self.maxSpeed and self.fuelLevel - fuelChange >= 5:
             self.currentSpeed += accel
             self.fuelLevel -= fuelChange
-        else:
+            return True
+        elif self.currentSpeed + accel >= self.maxSpeed and self.fuelLevel - fuelChange >= 5:
             self.currentSpeed = self.maxSpeed
-        return False
+            self.fuelLevel -= fuelChange
+            return True
 
     def brake(self, deccel):
 
@@ -35,4 +40,4 @@ class Car:
         else:
             self.fuelLevel = 100
             return True
-        return False
+
